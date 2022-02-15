@@ -1,5 +1,9 @@
 .game h1 {
-  font-size: 3.5em;
+  font-size: 2.5em;
+}
+
+.points span {
+  font-weight: bold;
 }
 
 .tip span {
@@ -13,7 +17,8 @@
   display: flex;
 }
 
-.letter {
+.letter,
+.blankSquare {
   font-size: 70px;
   line-height: 1.5;
   border: 3px solid #000;
