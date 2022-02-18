@@ -5,12 +5,15 @@ import { useState, useEffect } from "react";
 // 4 - custom hook
 import { useFetch } from "./hooks/useFetch";
 
+// 8 - errar url para mostrar erro
+// "http://localhost:3001/products"
 const url = "http://localhost:3000/products";
 
 function App() {
   const [products, setProducts] = useState([]);
 
-  const { data: items } = useFetch(url);
+  // 4 - custom hook e 5 - refactor post
+  const { data: items, httpConfig, loading, error } = useFetch(url);
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -33,18 +36,21 @@ function App() {
       price,
     };
 
-    const res = await fetch("http://localhost:3000/products", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(product),
-    });
+    // const res = await fetch("http://localhost:3000/products", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(product),
+    // });
 
-    const addedProduct = await res.json();
+    // const addedProduct = await res.json();
 
     // 3 - carregamento dinâmico
-    setProducts((prevProducts) => [...prevProducts, addedProduct]);
+    // setProducts((prevProducts) => [...prevProducts, addedProduct]);
+
+    // 5 - refatorar post
+    httpConfig(product);
 
     setName("");
     setPrice("");
@@ -53,6 +59,9 @@ function App() {
   return (
     <div className="App">
       <h1>Lista de produtos</h1>
+      {/* 6 - state de loading */}
+      {loading && <p>Carregando dados...</p>}
+      {error && <p>{error}</p>}
       <ul>
         {items &&
           items.map((product) => (
@@ -83,7 +92,8 @@ function App() {
               onChange={(e) => setPrice(e.target.value)}
             />
           </label>
-          <input type="submit" value="Criar" />
+          {/* 7 - state de loading no post */}
+          {loading ? <p>Aguarde!</p> : <input type="submit" value="Criar" />}
         </form>
       </div>
     </div>
