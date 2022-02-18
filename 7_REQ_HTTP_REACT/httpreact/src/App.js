@@ -50,10 +50,15 @@ function App() {
     // setProducts((prevProducts) => [...prevProducts, addedProduct]);
 
     // 5 - refatorar post
-    httpConfig(product);
+    httpConfig(product, "POST");
 
     setName("");
     setPrice("");
+  };
+
+  /* 9 - desafio */
+  const handleRemove = (id) => {
+    httpConfig(id, "DELETE");
   };
 
   return (
@@ -67,6 +72,8 @@ function App() {
           items.map((product) => (
             <li key={product.id}>
               {product.name} - R$: {product.price}
+              {/* 9 - desafio */}
+              <button onClick={() => handleRemove(product.id)}>Excluir</button>
             </li>
           ))}
       </ul>
