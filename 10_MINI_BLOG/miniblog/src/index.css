@@ -5,6 +5,16 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+input::placeholder,
+textarea::placeholder {
+  font-family: "Montserrat", sans-serif;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+}
+
 a {
   text-decoration: none;
   color: #000;
@@ -13,4 +23,60 @@ a {
 
 a:hover {
   color: #bbb;
+}
+
+/* form styles */
+form {
+  max-width: 40%;
+  margin: 0 auto;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+}
+
+label span {
+  margin-bottom: 0.3em;
+  font-weight: bold;
+  text-align: left;
+}
+
+input,
+textarea {
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding: 0.8em 0em;
+  background-color: transparent;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #aaa;
+}
+
+.btn {
+  background-color: #1a8918;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 10px;
+  width: 120px;
+  font-weight: bold;
+  border: none;
+  padding: 10px 5px;
+}
+
+.btn:hover {
+  background-color: #0f730c;
+}
+
+.container .error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 5px;
+  border-radius: 5px;
 }
