@@ -99,6 +99,10 @@ textarea::placeholder {
   background-color: #000;
 }
 
+button[disabled] {
+  background-color: #aaa;
+}
+
 .container .error {
   color: #721c24;
   background-color: #f8d7da;

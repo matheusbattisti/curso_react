@@ -24,8 +24,10 @@ import Register from "./pages/Register/Register";
 import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(undefined);
   const { auth } = useAuthentication();
+
+  const loadingUser = user === undefined;
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -33,36 +35,38 @@ function App() {
     });
   }, []);
 
+  if (loadingUser) {
+    return <p>Carregando...</p>;
+  }
+
   return (
     <div className="App">
-      {user && (
-        <AuthProvider value={{ user }}>
-          <BrowserRouter>
-            <Navbar />
-            <div className="container">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route
-                  path="/posts/create"
-                  element={user ? <CreatePost /> : <Navigate to="/" />}
-                />
-                <Route path="/posts/:id" element={<Post />} />
-                <Route path="/search" element={<Search />} />
-                <Route
-                  path="/login"
-                  element={!user ? <Login /> : <Navigate to="/" />}
-                />
-                <Route
-                  path="/register"
-                  element={!user ? <Register /> : <Navigate to="/" />}
-                />
-              </Routes>
-            </div>
-            <Footer />
-          </BrowserRouter>
-        </AuthProvider>
-      )}
+      <AuthProvider value={{ user }}>
+        <BrowserRouter>
+          <Navbar />
+          <div className="container">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route
+                path="/posts/create"
+                element={user ? <CreatePost /> : <Navigate to="/" />}
+              />
+              <Route path="/posts/:id" element={<Post />} />
+              <Route path="/search" element={<Search />} />
+              <Route
+                path="/login"
+                element={!user ? <Login /> : <Navigate to="/" />}
+              />
+              <Route
+                path="/register"
+                element={!user ? <Register /> : <Navigate to="/" />}
+              />
+            </Routes>
+          </div>
+          <Footer />
+        </BrowserRouter>
+      </AuthProvider>
     </div>
   );
 }

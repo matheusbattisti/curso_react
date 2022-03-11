@@ -1,6 +1,7 @@
 import {
   getAuth,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   updateProfile,
   signOut,
 } from "firebase/auth";
@@ -14,6 +15,8 @@ export const useAuthentication = () => {
   const auth = getAuth();
 
   const createUser = async (data) => {
+    setLoading(true);
+
     try {
       const { user } = await createUserWithEmailAndPassword(
         auth,
@@ -22,6 +25,8 @@ export const useAuthentication = () => {
       );
 
       await updateProfile(user, { dispayName: data.displayName });
+
+      return user;
     } catch (error) {
       console.log(error.message);
       console.log(typeof error.message);
@@ -38,11 +43,45 @@ export const useAuthentication = () => {
 
       setError(systemErrorMessage);
     }
+
+    setLoading(false);
   };
 
   const logout = () => {
     signOut(auth);
   };
 
-  return { auth, createUser, error, logout };
+  const login = async (data) => {
+    setLoading(true);
+
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+    } catch (error) {
+      console.log(error.message);
+      console.log(typeof error.message);
+
+      let systemErrorMessage;
+
+      if (error.message.includes("user-not-found")) {
+        systemErrorMessage = "Usuário não encontrado.";
+      } else if (error.message.includes("wrong-password")) {
+        systemErrorMessage = "Senha incorreta.";
+      } else {
+        systemErrorMessage = "Ocorreu um erro, por favor tenta mais tarde.";
+      }
+
+      setError(systemErrorMessage);
+    }
+
+    setLoading(false);
+  };
+
+  return {
+    auth,
+    createUser,
+    error,
+    logout,
+    login,
+    loading,
+  };
 };

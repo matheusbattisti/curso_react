@@ -10,9 +10,9 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const { createUser, error: authError } = useAuthentication();
+  const { createUser, error: authError, loading } = useAuthentication();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setError("");
@@ -28,7 +28,9 @@ const Register = () => {
       return;
     }
 
-    createUser(user);
+    const res = await createUser(user);
+
+    console.log(res);
   };
 
   useEffect(() => {
@@ -86,7 +88,12 @@ const Register = () => {
             value={confirmPassword}
           />
         </label>
-        <input type="submit" className="btn" value="Criar conta" />
+        {!loading && <button className="btn">Entrar</button>}
+        {loading && (
+          <button className="btn" disabled>
+            Aguarde...
+          </button>
+        )}
         {error && <p className="error">{error}</p>}
       </form>
     </div>

@@ -3,6 +3,7 @@ import styles from "./CreatePost.module.css";
 import { useState } from "react";
 import { useInsertDocument } from "../../hooks/useInsertDocument";
 import { useNavigate } from "react-router-dom";
+import { useAuthValue } from "../../contexts/AuthContext";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -10,6 +11,8 @@ const CreatePost = () => {
   const [body, setBody] = useState("");
   const [tags, setTags] = useState([]);
   const [formError, setFormError] = useState("");
+
+  const { user } = useAuthValue();
 
   const navigate = useNavigate();
 
@@ -31,9 +34,9 @@ const CreatePost = () => {
 
     console.log(tagsArray);
 
-    console.log({ title, image, body, tags: tagsArray });
+    console.log({ title, image, body, tags: tagsArray, uid: user.uid });
 
-    insertDocument({ title, image, body, tags: tagsArray });
+    insertDocument({ title, image, body, tags: tagsArray, uid: user.uid });
 
     // redirect to home page
     navigate("/");
@@ -41,6 +44,7 @@ const CreatePost = () => {
 
   return (
     <div className={styles.create_post}>
+      <p>{user.uid}</p>
       <h2>Criar post</h2>
       <p>Escreva sobre o que quiser e compartilhe o seu conhecimento!</p>
       <form onSubmit={handleSubmit}>
