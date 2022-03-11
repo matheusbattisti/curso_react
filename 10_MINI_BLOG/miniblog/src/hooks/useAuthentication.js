@@ -2,6 +2,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
+  signOut,
 } from "firebase/auth";
 
 import { useState } from "react";
@@ -10,9 +11,9 @@ export const useAuthentication = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
 
-  const createUser = async (data) => {
-    const auth = getAuth();
+  const auth = getAuth();
 
+  const createUser = async (data) => {
     try {
       const { user } = await createUserWithEmailAndPassword(
         auth,
@@ -39,5 +40,9 @@ export const useAuthentication = () => {
     }
   };
 
-  return { createUser, error };
+  const logout = () => {
+    signOut(auth);
+  };
+
+  return { auth, createUser, error, logout };
 };

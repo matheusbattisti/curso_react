@@ -15,13 +15,20 @@ textarea:focus {
   outline: none;
 }
 
-a {
+a,
+nav button {
   text-decoration: none;
+  background-color: transparent;
+  border: none;
   color: #000;
   transition: 0.4s;
+  font-size: 1em;
+  cursor: pointer;
+  font-family: "Montserrat", sans-seri;
 }
 
-a:hover {
+a:hover,
+nav button:hover {
   color: #bbb;
 }
 
@@ -67,6 +74,7 @@ textarea::placeholder {
   font-weight: bold;
   border: none;
   padding: 10px 15px;
+  font-size: 1em;
 }
 
 .btn.btn-dark {
