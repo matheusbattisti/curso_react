@@ -8,7 +8,7 @@ import {
   where,
 } from "firebase/firestore";
 
-export const useFetchDocuments = (docCollection) => {
+export const useFetchDocuments = (docCollection, search = null) => {
   const [documents, setDocuments] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
@@ -16,7 +16,17 @@ export const useFetchDocuments = (docCollection) => {
   useEffect(() => {
     const collectionRef = collection(db, docCollection);
 
-    let q = query(collectionRef, orderBy("createdAt", "desc"));
+    let q;
+
+    if (!search) {
+      q = query(collectionRef, orderBy("createdAt", "desc"));
+    } else {
+      q = query(
+        collectionRef,
+        where("title", "==", search),
+        orderBy("createdAt", "desc")
+      );
+    }
 
     onSnapshot(q, (querySnapshot) => {
       setDocuments(

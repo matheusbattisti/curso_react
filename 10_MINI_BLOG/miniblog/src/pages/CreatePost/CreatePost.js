@@ -27,7 +27,7 @@ const CreatePost = () => {
     }
 
     // create tags array
-    const tagsArray = tags.trim().split(",");
+    const tagsArray = tags.split(",").map((tag) => tag.trim());
 
     console.log(tagsArray);
 

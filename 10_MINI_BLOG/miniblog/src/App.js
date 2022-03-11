@@ -11,6 +11,9 @@ import Post from "./pages/Post/Post";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import CreatePost from "./pages/CreatePost/CreatePost";
+import Search from "./pages/Search/Search";
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
 
 function App() {
   return (
@@ -23,6 +26,9 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/posts/create" element={<CreatePost />} />
             <Route path="/posts/:id" element={<Post />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </div>
         <Footer />

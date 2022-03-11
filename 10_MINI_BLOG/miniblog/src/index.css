@@ -66,11 +66,29 @@ textarea::placeholder {
   width: 120px;
   font-weight: bold;
   border: none;
-  padding: 10px 5px;
+  padding: 10px 15px;
+}
+
+.btn.btn-dark {
+  background-color: #000;
+  border-radius: 0;
+}
+
+.btn.btn-outline {
+  background-color: transparent;
+  border-radius: 0;
+  color: #000;
+  border: 1px solid #000;
+  padding: 7px 30px;
 }
 
 .btn:hover {
   background-color: #0f730c;
+  color: #fff;
+}
+
+.btn.btn-outline:hover {
+  background-color: #000;
 }
 
 .container .error {
