@@ -20,7 +20,7 @@ export const useAuthentication = () => {
         data.password
       );
 
-      await updateProfile(user, { dispayName: data.displ });
+      await updateProfile(user, { dispayName: data.displayName });
     } catch (error) {
       console.log(error.message);
       console.log(typeof error.message);
