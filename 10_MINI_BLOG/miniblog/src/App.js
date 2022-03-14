@@ -19,6 +19,7 @@ import CreatePost from "./pages/CreatePost/CreatePost";
 import Search from "./pages/Search/Search";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 // context
 import { AuthProvider } from "./contexts/AuthContext";
@@ -61,6 +62,10 @@ function App() {
               <Route
                 path="/register"
                 element={!user ? <Register /> : <Navigate to="/" />}
+              />
+              <Route
+                path="/dashboard"
+                element={user ? <Dashboard /> : <Navigate to="/" />}
               />
             </Routes>
           </div>

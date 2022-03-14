@@ -8,7 +8,7 @@ import {
   where,
 } from "firebase/firestore";
 
-export const useFetchDocuments = (docCollection, search = null) => {
+export const useFetchDocuments = (docCollection, search = null, uid = null) => {
   const [documents, setDocuments] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
@@ -18,14 +18,22 @@ export const useFetchDocuments = (docCollection, search = null) => {
 
     let q;
 
-    if (!search) {
-      q = query(collectionRef, orderBy("createdAt", "desc"));
-    } else {
+    console.log("aqui ", uid);
+
+    if (search) {
       q = query(
         collectionRef,
         where("title", "==", search),
         orderBy("createdAt", "desc")
       );
+    } else if (uid) {
+      q = query(
+        collectionRef,
+        where("uid", "==", uid),
+        orderBy("createdAt", "desc")
+      );
+    } else {
+      q = query(collectionRef, orderBy("createdAt", "desc"));
     }
 
     onSnapshot(q, (querySnapshot) => {

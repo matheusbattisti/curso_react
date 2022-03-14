@@ -24,7 +24,13 @@ export const useAuthentication = () => {
         data.password
       );
 
-      await updateProfile(user, { dispayName: data.displayName });
+      const userAuth = getAuth();
+
+      await updateProfile(userAuth.currentUser, {
+        dispayName: data.displayName,
+      });
+
+      console.log(data);
 
       return user;
     } catch (error) {

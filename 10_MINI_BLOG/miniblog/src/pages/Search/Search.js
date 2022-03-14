@@ -14,7 +14,6 @@ const Search = () => {
 
   const { documents } = useFetchDocuments("posts", search);
 
-  console.log(styles);
   return (
     <div className={styles.search_container}>
       <h1>Resultados encontrados para: {search}</h1>

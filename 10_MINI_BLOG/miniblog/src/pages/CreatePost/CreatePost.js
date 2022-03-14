@@ -14,11 +14,13 @@ const CreatePost = () => {
 
   const { user } = useAuthValue();
 
+  console.log(user);
+
   const navigate = useNavigate();
 
   const { insertDocument, response } = useInsertDocument("posts");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError("");
 
@@ -34,9 +36,23 @@ const CreatePost = () => {
 
     console.log(tagsArray);
 
-    console.log({ title, image, body, tags: tagsArray, uid: user.uid });
+    console.log({
+      title,
+      image,
+      body,
+      tags: tagsArray,
+      uid: user.uid,
+      createdBy: user.displayName,
+    });
 
-    insertDocument({ title, image, body, tags: tagsArray, uid: user.uid });
+    await insertDocument({
+      title,
+      image,
+      body,
+      tags: tagsArray,
+      uid: user.uid,
+      createdBy: user.displayName,
+    });
 
     // redirect to home page
     navigate("/");
@@ -44,7 +60,6 @@ const CreatePost = () => {
 
   return (
     <div className={styles.create_post}>
-      <p>{user.uid}</p>
       <h2>Criar post</h2>
       <p>Escreva sobre o que quiser e compartilhe o seu conhecimento!</p>
       <form onSubmit={handleSubmit}>
