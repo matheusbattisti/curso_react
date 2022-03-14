@@ -13,12 +13,13 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
 
+  // deal with memory leak
+  const [cancelled, setCancelled] = useState(false);
+
   useEffect(() => {
     const collectionRef = collection(db, docCollection);
 
     let q;
-
-    console.log("aqui ", uid);
 
     if (search) {
       q = query(
@@ -47,6 +48,10 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
   }, [docCollection, db]);
 
   console.log(documents);
+
+  useEffect(() => {
+    return () => setCancelled(true);
+  }, []);
 
   return { documents, loading, error };
 };

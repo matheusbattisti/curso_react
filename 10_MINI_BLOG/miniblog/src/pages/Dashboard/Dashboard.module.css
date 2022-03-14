@@ -1,0 +1,19 @@
+.dashboard {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.noposts {
+  text-align: center;
+}
+
+.noposts p {
+  margin-bottom: 1.5em;
+}
+
+.noposts a {
+  padding: 10px 25px;
+}

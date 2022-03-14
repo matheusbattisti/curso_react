@@ -12,13 +12,13 @@ const Search = () => {
   const query = useQuery();
   const search = query.get("q");
 
-  const { documents } = useFetchDocuments("posts", search);
+  const { documents: posts } = useFetchDocuments("posts", search);
 
   return (
     <div className={styles.search_container}>
       <h1>Resultados encontrados para: {search}</h1>
       <div className="post-list">
-        {documents && documents.length === 0 && (
+        {posts && posts.length === 0 && (
           <>
             <p>Não foram encontrados posts a partir da sua busca...</p>
             <Link to="/" className="btn btn-dark">
@@ -26,8 +26,7 @@ const Search = () => {
             </Link>
           </>
         )}
-        {documents &&
-          documents.map((post) => <PostDetail key={post.id} post={post} />)}
+        {posts && posts.map((post) => <PostDetail key={post.id} post={post} />)}
       </div>
     </div>
   );

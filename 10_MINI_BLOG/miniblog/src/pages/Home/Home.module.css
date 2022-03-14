@@ -17,3 +17,15 @@
   margin-right: 10px;
   width: 50%;
 }
+
+.noposts {
+  text-align: center;
+}
+
+.noposts p {
+  margin-bottom: 1.5em;
+}
+
+.noposts a {
+  padding: 10px 25px;
+}

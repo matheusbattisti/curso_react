@@ -7,11 +7,15 @@ export const useFetchDocument = (docCollection, id) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
 
-  useEffect(async () => {
-    const docRef = doc(db, docCollection, id);
-    const docSnap = await getDoc(docRef);
+  useEffect(() => {
+    const loadDocument = async () => {
+      const docRef = await doc(db, docCollection, id);
+      const docSnap = await getDoc(docRef);
 
-    setDocument(docSnap.data());
+      setDocument(docSnap.data());
+    };
+
+    loadDocument();
   }, [docCollection, db, id]);
 
   console.log(document);

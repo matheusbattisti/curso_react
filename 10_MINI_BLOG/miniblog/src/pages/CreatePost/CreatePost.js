@@ -14,13 +14,11 @@ const CreatePost = () => {
 
   const { user } = useAuthValue();
 
-  console.log(user);
-
   const navigate = useNavigate();
 
   const { insertDocument, response } = useInsertDocument("posts");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setFormError("");
 
@@ -45,7 +43,7 @@ const CreatePost = () => {
       createdBy: user.displayName,
     });
 
-    await insertDocument({
+    insertDocument({
       title,
       image,
       body,
