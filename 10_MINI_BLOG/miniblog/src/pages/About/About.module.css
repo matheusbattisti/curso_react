@@ -5,6 +5,11 @@
   align-items: center;
 }
 
+.about p {
+  color: #aaa;
+  margin-bottom: 2em;
+}
+
 .about a {
   display: block;
   margin-top: 15px;

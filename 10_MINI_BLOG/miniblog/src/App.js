@@ -20,6 +20,7 @@ import Search from "./pages/Search/Search";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import EditPost from "./pages/EditPost/EditPost";
 
 // context
 import { AuthProvider } from "./contexts/AuthContext";
@@ -34,7 +35,7 @@ function App() {
     onAuthStateChanged(auth, (user) => {
       setUser(user);
     });
-  }, []);
+  }, [auth]);
 
   if (loadingUser) {
     return <p>Carregando...</p>;
@@ -51,7 +52,11 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route
                 path="/posts/create"
-                element={user ? <CreatePost /> : <Navigate to="/" />}
+                element={user ? <CreatePost /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="/posts/edit/:id"
+                element={user ? <EditPost /> : <Navigate to="/login" />}
               />
               <Route path="/posts/:id" element={<Post />} />
               <Route path="/search" element={<Search />} />
@@ -65,7 +70,7 @@ function App() {
               />
               <Route
                 path="/dashboard"
-                element={user ? <Dashboard /> : <Navigate to="/" />}
+                element={user ? <Dashboard /> : <Navigate to="/login" />}
               />
             </Routes>
           </div>

@@ -9,14 +9,23 @@ export const useFetchDocument = (docCollection, id) => {
 
   useEffect(() => {
     const loadDocument = async () => {
-      const docRef = await doc(db, docCollection, id);
-      const docSnap = await getDoc(docRef);
+      setLoading(true);
 
-      setDocument(docSnap.data());
+      try {
+        const docRef = await doc(db, docCollection, id);
+        const docSnap = await getDoc(docRef);
+
+        setDocument(docSnap.data());
+      } catch (error) {
+        console.log(error);
+        setError(error.message);
+      }
+
+      setLoading(false);
     };
 
     loadDocument();
-  }, [docCollection, db, id]);
+  }, [docCollection, id]);
 
   console.log(document);
 

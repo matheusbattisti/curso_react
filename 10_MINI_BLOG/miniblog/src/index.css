@@ -99,6 +99,10 @@ textarea::placeholder {
   background-color: #000;
 }
 
+.btn.btn-danger:hover {
+  background-color: #dc3545;
+}
+
 button[disabled] {
   background-color: #aaa;
 }

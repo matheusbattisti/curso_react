@@ -12,7 +12,7 @@ import { useState } from "react";
 import PostDetail from "../../components/PostDetail";
 
 const Home = () => {
-  const { documents: posts } = useFetchDocuments("posts");
+  const { documents: posts, loading } = useFetchDocuments("posts");
 
   const navigate = useNavigate();
 
@@ -26,18 +26,21 @@ const Home = () => {
     }
   };
 
+  console.log(loading);
+
   return (
     <div className={styles.home}>
       <h1>Veja os nossos posts mais recentes</h1>
       <form className={styles.search_form} onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Busque por artigos..."
+          placeholder="Ou busque por tags..."
           onChange={(e) => setQuery(e.target.value)}
         />
         <button className="btn btn-dark">Pesquisar</button>
       </form>
       <div className="post-list">
+        {loading && <p>Carregando...</p>}
         {posts && posts.length === 0 && (
           <div className={styles.noposts}>
             <p>Não foram encontrados posts</p>
