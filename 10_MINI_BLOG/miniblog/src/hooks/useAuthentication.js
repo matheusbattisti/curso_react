@@ -70,12 +70,14 @@ export const useAuthentication = () => {
     checkIfIsCancelled();
 
     setLoading(true);
+    setError(false);
 
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
     } catch (error) {
       console.log(error.message);
       console.log(typeof error.message);
+      console.log(error.message.includes("user-not"));
 
       let systemErrorMessage;
 
@@ -87,8 +89,12 @@ export const useAuthentication = () => {
         systemErrorMessage = "Ocorreu um erro, por favor tenta mais tarde.";
       }
 
+      console.log(systemErrorMessage);
+
       setError(systemErrorMessage);
     }
+
+    console.log(error);
 
     setLoading(false);
   };
