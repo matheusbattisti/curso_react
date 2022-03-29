@@ -1,8 +1,8 @@
-const User = require("../models/User.js");
-
 const express = require("express");
 const router = express.Router();
 
-router.post("/", () => {});
+router.get("/", (req, res) => {
+  res.send("test photo");
+});
 
 module.exports = router;
