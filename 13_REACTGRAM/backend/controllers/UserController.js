@@ -83,7 +83,7 @@ const login = async (req, res) => {
 
 // Update user
 const update = async (req, res) => {
-  const { name, email, password, bio } = req.body;
+  const { name, password, bio } = req.body;
   const profileImage = req.file.filename;
 
   const reqUser = req.user;

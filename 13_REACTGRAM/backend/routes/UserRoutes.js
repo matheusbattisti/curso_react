@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+// Controller
 const {
   register,
   getCurrentUser,
@@ -8,6 +9,7 @@ const {
   update,
 } = require("../controllers/UserController");
 
+// Middlewares
 const validate = require("../middlewares/handleValidations");
 const {
   userCreateValidation,
@@ -17,6 +19,7 @@ const {
 const authGuard = require("../middlewares/authGuard");
 const { imageUpload } = require("../middlewares/imageUpload");
 
+// Routes
 router.post("/register", userCreateValidation(), validate, register);
 router.get("/profile", authGuard, getCurrentUser);
 router.post("/login", loginValidation(), validate, login);
