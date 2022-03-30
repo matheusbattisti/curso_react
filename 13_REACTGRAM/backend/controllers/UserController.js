@@ -47,6 +47,26 @@ const register = async (req, res) => {
   }
 };
 
+// Get logged in user
+const getCurrentUser = async (req, res) => {
+  const user = req.user;
+
+  res.status(200).json(user);
+};
+
+// Sign user in
+const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    res.json({ errors: ["Usuário não encontrado!"] });
+  }
+};
+
 module.exports = {
   register,
+  getCurrentUser,
+  login,
 };
