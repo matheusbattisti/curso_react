@@ -35,16 +35,18 @@ const register = async (req, res) => {
     password: passwordHash,
   });
 
-  if (newUser) {
-    res.status(201).json({
-      _id: newUser._id,
-      token: generateToken(newUser._id),
-    });
-  } else {
+  // If user was created sucessfully, return the token
+  if (!newUser) {
     res.status(422).json({
       errors: ["Houve um erro, por favor tente novamente mais tarde."],
     });
+    return;
   }
+
+  res.status(201).json({
+    _id: newUser._id,
+    token: generateToken(newUser._id),
+  });
 };
 
 // Get logged in user
@@ -60,13 +62,60 @@ const login = async (req, res) => {
 
   const user = await User.findOne({ email });
 
+  // Check if user exists
   if (!user) {
     res.json({ errors: ["Usuário não encontrado!"] });
+    return;
   }
+
+  // Check if password matches
+  if (!(await bcrypt.compare(password, user.password))) {
+    res.json({ errors: ["Senha inválida!"] });
+    return;
+  }
+
+  // Return user with token
+  res.status(200).json({
+    _id: user._id,
+    token: generateToken(user._id),
+  });
+};
+
+// Update user
+const update = async (req, res) => {
+  const { name, email, password, bio } = req.body;
+  const profileImage = req.file.filename;
+
+  const reqUser = req.user;
+
+  const user = await User.findById(reqUser._id);
+
+  if (name) {
+    user.name = name;
+  }
+
+  if (password) {
+    const salt = await bcrypt.genSalt();
+    const passwordHash = await bcrypt.hash(password, salt);
+    user.password = passwordHash;
+  }
+
+  if (profileImage) {
+    user.profileImage = profileImage;
+  }
+
+  if (bio) {
+    user.bio = bio;
+  }
+
+  await user.save();
+
+  res.status(200).json(user);
 };
 
 module.exports = {
   register,
   getCurrentUser,
   login,
+  update,
 };

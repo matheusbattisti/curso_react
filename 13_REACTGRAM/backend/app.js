@@ -1,12 +1,17 @@
 require("dotenv").config();
 
 const express = require("express");
+const path = require("path");
+
 const port = process.env.PORT;
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Upload directory
+app.use(express.static(path.join(__dirname, "uploads")));
 
 // db connection
 require("./config/db.js");
