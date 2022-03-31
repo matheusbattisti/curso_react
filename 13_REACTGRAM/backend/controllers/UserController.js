@@ -64,13 +64,13 @@ const login = async (req, res) => {
 
   // Check if user exists
   if (!user) {
-    res.json({ errors: ["Usuário não encontrado!"] });
+    res.status(404).json({ errors: ["Usuário não encontrado!"] });
     return;
   }
 
   // Check if password matches
   if (!(await bcrypt.compare(password, user.password))) {
-    res.json({ errors: ["Senha inválida!"] });
+    res.status(422).json({ errors: ["Senha inválida!"] });
     return;
   }
 
