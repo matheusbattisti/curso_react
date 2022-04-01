@@ -49,6 +49,7 @@ input[type="submit"] {
   font-weight: bold;
   cursor: pointer;
   opacity: 0.8;
+  font-size: 1em;
 }
 
 input[type="submit"] {

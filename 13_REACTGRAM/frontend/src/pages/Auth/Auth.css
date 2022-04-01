@@ -14,6 +14,12 @@
   margin-top: 0;
 }
 
+.subtitle {
+  font-weight: bold;
+  color: #999;
+  margin-bottom: 1.5em;
+}
+
 #login form,
 #register form {
   padding-bottom: 1.5em;

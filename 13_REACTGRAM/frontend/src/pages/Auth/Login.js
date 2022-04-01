@@ -6,6 +6,7 @@ const Login = () => {
   return (
     <div id="login">
       <h2>ReactGram</h2>
+      <p class="subtitle">Faça o login para ver o que há de novo.</p>
       <form>
         <input type="text" placeholder="E-mail" />
         <input type="text" placeholder="Senha" />
