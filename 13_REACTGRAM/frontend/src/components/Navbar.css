@@ -27,8 +27,17 @@
 
 #nav-links {
   display: flex;
+  align-items: center;
 }
 
 #nav-links li {
   margin-right: 1em;
+}
+
+#nav-links span {
+  cursor: pointer;
+}
+
+#nav-links svg {
+  font-size: 1.5em;
 }

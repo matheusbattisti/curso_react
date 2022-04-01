@@ -1,8 +1,14 @@
 import "./Auth.css";
 
+// Components
 import { Link } from "react-router-dom";
+import ErrorMessage from "../../components/ErrorMessage";
+
+// Hooks
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
+// Redux
 import { register, reset } from "../../slices/authSlice";
 
 const Register = () => {
@@ -13,7 +19,7 @@ const Register = () => {
 
   const dispatch = useDispatch();
 
-  const { loading, error, success } = useSelector((state) => state.auth);
+  const { loading, error } = useSelector((state) => state.auth);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,12 +28,18 @@ const Register = () => {
       name,
       email,
       password,
+      confirmPassword,
     };
 
     console.log(user);
 
     dispatch(register(user));
   };
+
+  // Clean all auth states
+  useEffect(() => {
+    dispatch(reset());
+  }, [dispatch]);
 
   return (
     <div id="register">
@@ -58,7 +70,9 @@ const Register = () => {
           onChange={(e) => setConfirmPassword(e.target.value)}
           value={confirmPassword}
         />
-        <input type="submit" value="Cadastrar" />
+        {!loading && <input type="submit" value="Cadastrar" />}
+        {loading && <input type="submit" disabled value="Aguarde..." />}
+        {error && <ErrorMessage error={error} />}
       </form>
       <p>
         Já tem conta? <Link to="/login">Clique aqui</Link>

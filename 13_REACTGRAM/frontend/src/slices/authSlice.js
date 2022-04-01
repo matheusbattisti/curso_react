@@ -8,31 +8,39 @@ const initialState = {
   error: false,
   success: false,
   loading: false,
-  message: "",
 };
 
 // Register a user and sign in
 export const register = createAsyncThunk(
   "auth/register",
   async (user, thunkAPI) => {
-    try {
-      return await authService.register(user);
-    } catch (error) {
-      console.log(error);
+    const data = await authService.register(user);
 
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-
-      console.log(message);
-
-      return thunkAPI.rejectWithValue(message);
+    // Check for errors
+    if (data.errors) {
+      return thunkAPI.rejectWithValue(data.errors[0]);
     }
+
+    return data;
   }
 );
+
+// Logout a user
+export const logout = createAsyncThunk("auth/logout", async () => {
+  await authService.logout();
+});
+
+// Sing in a user
+export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
+  const data = await authService.login(user);
+
+  // Check for errors
+  if (data.errors) {
+    return thunkAPI.rejectWithValue(data.errors[0]);
+  }
+
+  return data;
+});
 
 export const authSlice = createSlice({
   name: "auth",
@@ -42,23 +50,44 @@ export const authSlice = createSlice({
       state.loading = false;
       state.error = false;
       state.success = false;
-      state.message = "";
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(register.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(register.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
+        state.error = null;
         state.user = action.payload;
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
-        state.error = true;
-        state.message = action.payload;
+        state.error = action.payload;
+        state.user = null;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.user = null;
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+      })
+      .addCase(login.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.user = action.payload;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
         state.user = null;
       });
   },
