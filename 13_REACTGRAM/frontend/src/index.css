@@ -56,6 +56,11 @@ input[type="submit"] {
   margin-top: 1em;
 }
 
+input:disabled {
+  cursor: not-allowed;
+  background-color: #000;
+}
+
 button:hover,
 input[type="submit"]:hover {
   opacity: 1;

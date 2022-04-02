@@ -9,9 +9,7 @@ const profile = async (data, token) => {
       .then((res) => res.json())
       .catch((err) => err);
 
-    if (res) {
-      localStorage.setItem("user", JSON.stringify(res));
-    }
+    console.log(res);
 
     return res;
   } catch (error) {

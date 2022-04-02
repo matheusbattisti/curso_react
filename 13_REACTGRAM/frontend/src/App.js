@@ -17,7 +17,11 @@ import Register from "./pages/Auth/Register";
 import Profile from "./pages/Profile/Profile";
 
 function App() {
-  const { auth } = useAuth();
+  const { auth, loading } = useAuth();
+
+  if (loading) {
+    return <p>Carregando...</p>;
+  }
 
   return (
     <div className="App">
