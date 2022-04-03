@@ -6,6 +6,7 @@ const initialState = {
   error: false,
   success: false,
   loading: false,
+  message: null,
 };
 
 // Get user details
@@ -45,10 +46,8 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    reset: (state) => {
-      state.loading = false;
-      state.error = false;
-      state.success = false;
+    resetMessage: (state) => {
+      state.message = null;
     },
   },
   extraReducers: (builder) => {
@@ -62,9 +61,25 @@ export const userSlice = createSlice({
         state.success = true;
         state.error = null;
         state.user = action.payload;
+      })
+      .addCase(updateProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.user = action.payload;
+        state.message = "Usuário atualizado com sucesso!";
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.user = null;
       });
   },
 });
 
-export const { reset } = userSlice.actions;
+export const { resetMessage } = userSlice.actions;
 export default userSlice.reducer;

@@ -25,6 +25,19 @@ form {
   flex-direction: column;
 }
 
+label {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+label span {
+  font-weight: bold;
+  margin-bottom: .5em;
+  color: #AAA;
+  font-size: .7em;
+}
+
 input {
   background-color: #3b3b3b;
   color: #aaa;

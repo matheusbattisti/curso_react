@@ -94,7 +94,7 @@ const update = async (req, res) => {
 
   const reqUser = req.user;
 
-  const user = await User.findById(reqUser._id);
+  const user = await User.findById(reqUser._id).select("-password");
 
   if (name) {
     user.name = name;
