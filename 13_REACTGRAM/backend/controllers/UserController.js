@@ -85,7 +85,12 @@ const login = async (req, res) => {
 // Update user
 const update = async (req, res) => {
   const { name, password, bio } = req.body;
-  const profileImage = req.file.filename;
+
+  let profileImage = null;
+
+  if (req.file) {
+    profileImage = req.file.filename;
+  }
 
   const reqUser = req.user;
 
