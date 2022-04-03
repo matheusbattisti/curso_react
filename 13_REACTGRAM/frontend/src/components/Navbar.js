@@ -12,12 +12,14 @@ import {
 // Hooks
 import { useAuth } from "../hooks/useAuth";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 // Redux
 import { logout, reset } from "../slices/authSlice";
 
 const Navbar = () => {
   const { auth } = useAuth();
+  const { user } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
@@ -44,7 +46,7 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/myphotos">
+              <NavLink to={`/users/${user._id}`}>
                 <BsFillCameraFill />
               </NavLink>
             </li>
