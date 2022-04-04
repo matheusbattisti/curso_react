@@ -10,6 +10,11 @@ export const requestConfig = (method, data, token = null, image = null) => {
       body: data,
       headers: {},
     };
+  } else if (method === "DELETE") {
+    config = {
+      method: method,
+      headers: {},
+    };
   } else {
     config = {
       method: method,

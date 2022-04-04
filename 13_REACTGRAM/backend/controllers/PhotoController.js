@@ -53,9 +53,11 @@ const deletePhoto = async (req, res) => {
     return;
   }
 
-  await Photo.deleteOne(photo._id);
+  await Photo.findByIdAndDelete(photo._id);
 
-  res.status(200).json({ message: "Foto excluída com sucesso." });
+  res
+    .status(200)
+    .json({ id: photo._id, message: "Foto excluída com sucesso." });
 };
 
 // Get all photos
@@ -97,7 +99,12 @@ const getPhotoById = async (req, res) => {
 const updatePhoto = async (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
-  const image = req.file.filename;
+
+  let image;
+
+  if (req.file) {
+    image = req.file.filename;
+  }
 
   const reqUser = req.user;
 
@@ -127,7 +134,7 @@ const updatePhoto = async (req, res) => {
 
   await photo.save();
 
-  res.status(200).json(photo);
+  res.status(200).json({ photo, message: "Foto atualizada com sucesso!" });
 };
 
 // Like functionality

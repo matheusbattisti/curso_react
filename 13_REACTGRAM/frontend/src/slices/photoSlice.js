@@ -50,6 +50,52 @@ export const getPhoto = createAsyncThunk("photo/getphoto", async (id) => {
   return data;
 });
 
+// Delete a photo
+export const deletePhoto = createAsyncThunk(
+  "photo/delete",
+  async (id, thunkAPI) => {
+    const token = thunkAPI.getState().auth.user.token;
+
+    const data = await photoService.deletePhoto(id, token);
+
+    console.log(data.errors);
+    // Check for errors
+    if (data.errors) {
+      return thunkAPI.rejectWithValue(data.errors[0]);
+    }
+
+    return data;
+  }
+);
+
+// Update a photo
+export const updatePhoto = createAsyncThunk(
+  "photo/update",
+  async (photoData, thunkAPI) => {
+    console.log("Teste");
+
+    const token = thunkAPI.getState().auth.user.token;
+
+    console.log("Opa");
+
+    const data = await photoService.updatePhoto(
+      { title: photoData.title },
+      photoData.id,
+      token
+    );
+
+    console.log(data);
+
+    console.log(data.errors);
+    // Check for errors
+    if (data.errors) {
+      return thunkAPI.rejectWithValue(data.errors[0]);
+    }
+
+    return data;
+  }
+);
+
 export const photoSlice = createSlice({
   name: "publish",
   initialState,
@@ -98,6 +144,51 @@ export const photoSlice = createSlice({
         state.success = true;
         state.error = null;
         state.photo = action.payload;
+      })
+      .addCase(deletePhoto.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deletePhoto.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+
+        state.photos = state.photos.filter((photo) => {
+          console.log(photo._id);
+          console.log(action.payload.id);
+          console.log(photo._id !== action.payload.id);
+          return photo._id !== action.payload.id;
+        });
+
+        state.message = action.payload.message;
+      })
+      .addCase(deletePhoto.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.photo = null;
+      })
+      .addCase(updatePhoto.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updatePhoto.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+
+        state.photos.map((photo) => {
+          if (photo._id === action.payload.photo._id) {
+            photo.title = action.payload.photo.title;
+          }
+        });
+
+        state.message = action.payload.message;
+      })
+      .addCase(updatePhoto.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.photo = null;
       });
   },
 });

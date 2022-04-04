@@ -33,9 +33,9 @@ label {
 
 label span {
   font-weight: bold;
-  margin-bottom: .5em;
-  color: #AAA;
-  font-size: .7em;
+  margin-bottom: 0.5em;
+  color: #aaa;
+  font-size: 0.7em;
 }
 
 input {
@@ -77,4 +77,12 @@ input:disabled {
 button:hover,
 input[type="submit"]:hover {
   opacity: 1;
+}
+
+.cancel-btn {
+  background-color: #ccc;
+}
+
+.hide {
+  display: none;
 }
