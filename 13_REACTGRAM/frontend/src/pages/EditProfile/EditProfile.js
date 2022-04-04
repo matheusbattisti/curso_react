@@ -15,7 +15,7 @@ import Message from "../../components/Message";
 const Profile = () => {
   const dispatch = useDispatch();
 
-  const { user, message, error } = useSelector((state) => state.user);
+  const { user, message, error, loading } = useSelector((state) => state.user);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -131,7 +131,8 @@ const Profile = () => {
             value={password || ""}
           />
         </label>
-        <input type="submit" value="Atualizar" />
+        {!loading && <input type="submit" value="Atualizar" />}
+        {loading && <input type="submit" disabled value="Aguarde..." />}
         {error && <Message msg={error} type="error" />}
         {message && <Message msg={message} type="success" />}
       </form>

@@ -2,6 +2,9 @@ import "./Profile.css";
 
 import { uploads } from "../../utils/config";
 
+// components
+import Message from "../../components/Message";
+
 // hooks
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,6 +12,7 @@ import { useParams } from "react-router-dom";
 
 // Redux
 import { getUserDetails } from "../../slices/userSlice";
+import { publishPhoto } from "../../slices/photoSlice";
 
 const Profile = () => {
   const { id } = useParams();
@@ -16,27 +20,52 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   const { user, loading } = useSelector((state) => state.user);
+  const {
+    photo,
+    photos,
+    loading: loadingPhoto,
+    error: errorPhoto,
+    message: messagePhoto,
+  } = useSelector((state) => state.photo);
 
   const [title, setTitle] = useState();
-  const [photo, setPhoto] = useState();
+  const [image, setImage] = useState();
 
   // Load user data
   useEffect(() => {
     dispatch(getUserDetails(id));
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   console.log(user);
 
   // Publish a new photo
   const submitHandle = (e) => {
     e.preventDefault();
+
+    const photoData = {
+      title,
+      image,
+    };
+
+    console.log(photoData);
+
+    // build form data
+    const formData = new FormData();
+
+    const photoFormData = Object.keys(photoData).forEach((key) =>
+      formData.append(key, photoData[key])
+    );
+
+    formData.append("photo", photoFormData);
+
+    dispatch(publishPhoto(formData));
   };
 
   // change image state
   const handleFile = (e) => {
     const image = e.target.files[0];
 
-    setPhoto(image);
+    setImage(image);
   };
 
   if (loading) {
@@ -46,7 +75,9 @@ const Profile = () => {
   return (
     <div id="profile">
       <div className="profile-header">
-        <img src={`${uploads}/users/${user.profileImage}`} alt={user.name} />
+        {user.profileImage && (
+          <img src={`${uploads}/users/${user.profileImage}`} alt={user.name} />
+        )}
         <div className="profile-description">
           <h2>{user.name}</h2>
           <p>{user.bio}</p>
@@ -62,14 +93,19 @@ const Profile = () => {
                 type="text"
                 placeholder="Insira um título"
                 onChange={(e) => setTitle(e.target.value)}
-                value={title}
+                value={title || ""}
               />
             </label>
             <label>
               <span>Imagem:</span>
               <input type="file" onChange={handleFile} />
             </label>
-            <input type="submit" value="Postar" />
+            {!loadingPhoto && <input type="submit" value="Postar" />}
+            {loadingPhoto && (
+              <input type="submit" disabled value="Aguarde..." />
+            )}
+            {errorPhoto && <Message msg={errorPhoto} type="error" />}
+            {messagePhoto && <Message msg={messagePhoto} type="success" />}
           </form>
         </div>
       )}

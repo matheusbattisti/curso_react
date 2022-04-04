@@ -1,8 +1,8 @@
 import { api, requestConfig } from "../utils/config";
 
 // Publish an user's photo
-const publishPhoto = async (data) => {
-  const config = requestConfig("POST", data);
+const publishPhoto = async (data, token) => {
+  const config = requestConfig("POST", data, token, true);
 
   try {
     const res = await fetch(api + "/photos", config)
