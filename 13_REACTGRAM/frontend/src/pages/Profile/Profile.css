@@ -1,19 +1,24 @@
 #profile {
-    width: 50%;
-    margin: 0 auto;
+  width: 50%;
+  margin: 0 auto;
 }
 
 .profile-header {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 1em;
-    border-bottom: 1px solid #363636;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 1em;
+  border-bottom: 1px solid #363636;
 }
 
 .profile-header img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-right: 2em;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 2em;
+}
+
+.new-photo {
+  padding: 1em;
+  border-bottom: 1px solid #363636;
 }
