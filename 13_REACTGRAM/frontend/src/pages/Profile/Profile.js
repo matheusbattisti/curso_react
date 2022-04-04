@@ -4,6 +4,7 @@ import { uploads } from "../../utils/config";
 
 // components
 import Message from "../../components/Message";
+import { Link } from "react-router-dom";
 
 // hooks
 import { useEffect, useState } from "react";
@@ -12,7 +13,11 @@ import { useParams } from "react-router-dom";
 
 // Redux
 import { getUserDetails } from "../../slices/userSlice";
-import { publishPhoto } from "../../slices/photoSlice";
+import {
+  getUserPhotos,
+  publishPhoto,
+  resetMessage,
+} from "../../slices/photoSlice";
 
 const Profile = () => {
   const { id } = useParams();
@@ -34,6 +39,7 @@ const Profile = () => {
   // Load user data
   useEffect(() => {
     dispatch(getUserDetails(id));
+    dispatch(getUserPhotos(id));
   }, [dispatch, id]);
 
   console.log(user);
@@ -59,6 +65,10 @@ const Profile = () => {
     formData.append("photo", photoFormData);
 
     dispatch(publishPhoto(formData));
+
+    setTimeout(() => {
+      dispatch(resetMessage());
+    }, 2000);
   };
 
   // change image state
@@ -110,7 +120,22 @@ const Profile = () => {
         </div>
       )}
       <div className="user-photos">
-        <p>fotos...</p>
+        <h2>Fotos publicadas:</h2>
+        <div className="photos-container">
+          {photos &&
+            photos.map((photo) => (
+              <Link
+                to={`/photos/${photo._id}`}
+                className="photo"
+                key={photo._id}
+              >
+                <img
+                  src={`${uploads}/photos/${photo.image}`}
+                  alt={photo.title}
+                />
+              </Link>
+            ))}
+        </div>
       </div>
     </div>
   );

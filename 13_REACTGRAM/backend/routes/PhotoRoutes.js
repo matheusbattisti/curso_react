@@ -35,7 +35,7 @@ router.post(
 );
 router.delete("/:id", authGuard, deletePhoto);
 router.get("/", getAllPhotos);
-router.get("/myphotos", authGuard, getUserPhotos);
+router.get("/user/:id", getUserPhotos);
 router.get("/search", searchPhotos);
 
 router.get("/:id", getPhotoById);

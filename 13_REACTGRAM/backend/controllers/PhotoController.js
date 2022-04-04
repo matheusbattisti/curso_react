@@ -7,6 +7,8 @@ const insertPhoto = async (req, res) => {
   const { title } = req.body;
   const image = req.file.filename;
 
+  console.log(req.body);
+
   const reqUser = req.user;
 
   const user = await User.findById(reqUser._id);
@@ -58,16 +60,20 @@ const deletePhoto = async (req, res) => {
 
 // Get all photos
 const getAllPhotos = async (req, res) => {
-  const photos = await Photo.find({});
+  const photos = await Photo.find({})
+    .sort([["createdAt", -1]])
+    .exec();
 
   return res.status(200).json(photos);
 };
 
 // Get user photos
 const getUserPhotos = async (req, res) => {
-  const userId = req.user.id;
+  const { id } = req.params;
 
-  const photos = await Photo.find({ userId }).exec();
+  const photos = await Photo.find({ userId: id })
+    .sort([["createdAt", -1]])
+    .exec();
 
   return res.status(200).json(photos);
 };
@@ -76,7 +82,7 @@ const getUserPhotos = async (req, res) => {
 const getPhotoById = async (req, res) => {
   const { id } = req.params;
 
-  const photo = await Photo.findById(id);
+  const photo = await Photo.findById(mongoose.Types.ObjectId(id));
 
   // Check if photo exists
   if (!photo) {

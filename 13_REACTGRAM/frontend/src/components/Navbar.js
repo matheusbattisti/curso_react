@@ -19,7 +19,7 @@ import { logout, reset } from "../slices/authSlice";
 
 const Navbar = () => {
   const { auth } = useAuth();
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 

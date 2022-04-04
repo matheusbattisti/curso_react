@@ -28,14 +28,33 @@ export const publishPhoto = createAsyncThunk(
   }
 );
 
+// Get user photos
+export const getUserPhotos = createAsyncThunk(
+  "photo/userphotos",
+  async (id, thunkAPI) => {
+    const token = thunkAPI.getState().auth.user.token;
+
+    const data = await photoService.getUserPhotos(id, token);
+
+    console.log(data);
+    console.log(data.errors);
+
+    return data;
+  }
+);
+
+// Get photo
+export const getPhoto = createAsyncThunk("photo/getphoto", async (id) => {
+  const data = await photoService.getPhoto(id);
+
+  return data;
+});
+
 export const photoSlice = createSlice({
   name: "publish",
   initialState,
   reducers: {
-    reset: (state) => {
-      state.loading = false;
-      state.error = false;
-      state.success = false;
+    resetMessage: (state) => {
       state.message = null;
     },
   },
@@ -50,16 +69,38 @@ export const photoSlice = createSlice({
         state.success = true;
         state.error = null;
         state.photo = action.payload;
-        state.photos = state.photos.push(state.photo);
+        state.photos.unshift(state.photo);
         state.message = "Foto publicada com sucesso!";
       })
       .addCase(publishPhoto.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
         state.photo = null;
+      })
+      .addCase(getUserPhotos.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getUserPhotos.fulfilled, (state, action) => {
+        console.log(action.payload);
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.photos = action.payload;
+      })
+      .addCase(getPhoto.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getPhoto.fulfilled, (state, action) => {
+        console.log(action.payload);
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.photo = action.payload;
       });
   },
 });
 
-export const { reset } = photoSlice.actions;
+export const { resetMessage } = photoSlice.actions;
 export default photoSlice.reducer;

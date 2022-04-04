@@ -22,3 +22,18 @@
   padding: 1em;
   border-bottom: 1px solid #363636;
 }
+
+.photos-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.photo {
+  width: 32%;
+  margin: .3%;
+}
+
+.photo img {
+  width: 100%;
+}
+
