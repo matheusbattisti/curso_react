@@ -162,7 +162,9 @@ const likePhoto = async (req, res) => {
 
   await photo.save();
 
-  res.status(200).json({ message: "A foto foi curtida!" });
+  res
+    .status(200)
+    .json({ photoId: id, userId: reqUser._id, message: "A foto foi curtida!" });
 };
 
 // Comment functionality
@@ -186,7 +188,7 @@ const commentPhoto = async (req, res) => {
   const userComment = {
     comment,
     userName: user.name,
-    userImage: user.image,
+    userImage: user.profileImage,
     userId: user._id,
   };
 
@@ -194,7 +196,10 @@ const commentPhoto = async (req, res) => {
 
   await photo.save();
 
-  res.status(200).json({ message: "Comentário adicionado com sucesso!" });
+  res.status(200).json({
+    comment: userComment,
+    message: "Comentário adicionado com sucesso!",
+  });
 };
 
 // Search a photo by title

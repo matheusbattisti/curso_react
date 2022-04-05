@@ -206,10 +206,12 @@ const Profile = () => {
           {photos &&
             photos.map((photo) => (
               <div className="photo" key={photo._id}>
-                <img
-                  src={`${uploads}/photos/${photo.image}`}
-                  alt={photo.title}
-                />
+                {photo.image && (
+                  <img
+                    src={`${uploads}/photos/${photo.image}`}
+                    alt={photo.title}
+                  />
+                )}
                 {id === user._id && (
                   <div className="actions">
                     <Link to={`/photos/${photo._id}`}>

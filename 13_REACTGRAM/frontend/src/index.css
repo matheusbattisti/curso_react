@@ -52,6 +52,7 @@ input::placeholder {
   color: #aaa;
 }
 
+.btn,
 button,
 input[type="submit"] {
   background-color: #0094f6;
