@@ -222,10 +222,6 @@ export const photoSlice = createSlice({
         state.error = action.payload;
         state.photo = null;
       })
-      .addCase(like.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
       .addCase(like.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
@@ -245,10 +241,6 @@ export const photoSlice = createSlice({
       .addCase(like.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      })
-      .addCase(comment.pending, (state) => {
-        state.loading = true;
-        state.error = null;
       })
       .addCase(comment.fulfilled, (state, action) => {
         state.loading = false;

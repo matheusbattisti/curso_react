@@ -1,7 +1,7 @@
 import "./Navbar.css";
 
 // Components
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import {
   BsSearch,
   BsHouseDoorFill,
@@ -10,9 +10,10 @@ import {
 } from "react-icons/bs";
 
 // Hooks
+import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 // Redux
 import { logout, reset } from "../slices/authSlice";
@@ -21,11 +22,25 @@ const Navbar = () => {
   const { auth } = useAuth();
   const { user } = useSelector((state) => state.auth);
 
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
+
+  const [query, setQuery] = useState("");
 
   const handleLogout = () => {
     dispatch(logout());
     dispatch(reset());
+
+    navigate("/login");
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    if (query) {
+      return navigate(`/search?q=${query}`);
+    }
   };
 
   return (
@@ -33,9 +48,13 @@ const Navbar = () => {
       <Link to="/">
         <h2>ReactGram</h2>
       </Link>
-      <form id="search-form">
+      <form id="search-form" onSubmit={handleSearch}>
         <BsSearch />
-        <input type="text" placeholder="Pesquisar" />
+        <input
+          type="text"
+          placeholder="Pesquisar"
+          onChange={(e) => setQuery(e.target.value)}
+        />
       </form>
       <ul id="nav-links">
         {auth ? (
@@ -45,11 +64,13 @@ const Navbar = () => {
                 <BsHouseDoorFill />
               </NavLink>
             </li>
-            <li>
-              <NavLink to={`/users/${user._id}`}>
-                <BsFillCameraFill />
-              </NavLink>
-            </li>
+            {user && (
+              <li>
+                <NavLink to={`/users/${user._id}`}>
+                  <BsFillCameraFill />
+                </NavLink>
+              </li>
+            )}
             <li>
               <NavLink to="/profile">
                 <BsFillPersonFill />

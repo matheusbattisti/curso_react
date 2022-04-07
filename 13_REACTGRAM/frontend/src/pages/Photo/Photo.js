@@ -92,10 +92,12 @@ const Photo = () => {
             {photo.comments.map((comment) => (
               <div className="comment">
                 <div className="author">
-                  <img
-                    src={`${uploads}/users/${comment.userImage}`}
-                    alt={comment.userName}
-                  />
+                  {comment.userImage && (
+                    <img
+                      src={`${uploads}/users/${comment.userImage}`}
+                      alt={comment.userName}
+                    />
+                  )}
                   <p>{comment.userName}</p>
                 </div>
                 <p>{comment.comment}</p>
