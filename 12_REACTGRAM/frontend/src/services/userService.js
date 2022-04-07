@@ -19,9 +19,6 @@ const profile = async (data, token) => {
 const updateProfile = async (data, token) => {
   const config = requestConfig("PUT", data, token, true);
 
-  console.log(config);
-  console.log(data);
-
   try {
     const res = await fetch(api + "/users/", config)
       .then((res) => res.json())

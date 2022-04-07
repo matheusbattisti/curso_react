@@ -6,6 +6,7 @@ import { uploads } from "../../utils/config";
 import Message from "../../components/Message";
 import PhotoItem from "../../components/PhotoItem";
 import LikeContainer from "../../components/LikeContainer";
+import { Link } from "react-router-dom";
 
 // hooks
 import { useEffect, useState } from "react";
@@ -62,8 +63,6 @@ const Photo = () => {
     return <p>Carregando...</p>;
   }
 
-  console.log(user);
-
   return (
     <div id="photo">
       <PhotoItem photo={photo} />
@@ -87,7 +86,7 @@ const Photo = () => {
             </form>
             {photo.comments.length === 0 && <p>Não há comentários...</p>}
             {photo.comments.map((comment) => (
-              <div className="comment">
+              <div className="comment" key={comment.comment}>
                 <div className="author">
                   {comment.userImage && (
                     <img
@@ -95,7 +94,9 @@ const Photo = () => {
                       alt={comment.userName}
                     />
                   )}
-                  <p>{comment.userName}</p>
+                  <Link to={`/users/${comment.userId}`}>
+                    <p>{comment.userName}</p>
+                  </Link>
                 </div>
                 <p>{comment.comment}</p>
               </div>

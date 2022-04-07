@@ -13,11 +13,14 @@ const insertPhoto = async (req, res) => {
 
   const user = await User.findById(reqUser._id);
 
+  console.log(user.name);
+
   // Create photo
   const newPhoto = await Photo.create({
     image,
     title,
     userId: user._id,
+    userName: user.name,
   });
 
   // If user was photo sucessfully, return data

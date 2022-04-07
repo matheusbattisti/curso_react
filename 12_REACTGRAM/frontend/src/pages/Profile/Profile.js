@@ -28,6 +28,7 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   const { user, loading } = useSelector((state) => state.user);
+  const { user: userAuth } = useSelector((state) => state.auth);
   const {
     photos,
     loading: loadingPhoto,
@@ -52,8 +53,6 @@ const Profile = () => {
     dispatch(getUserPhotos(id));
   }, [dispatch, id]);
 
-  console.log(user);
-
   // Reset component message
   function resetComponentMessage() {
     setTimeout(() => {
@@ -70,8 +69,6 @@ const Profile = () => {
       image,
     };
 
-    console.log(photoData);
-
     // build form data
     const formData = new FormData();
 
@@ -82,6 +79,8 @@ const Profile = () => {
     formData.append("photo", photoFormData);
 
     dispatch(publishPhoto(formData));
+
+    setTitle("");
 
     resetComponentMessage();
   };
@@ -131,9 +130,6 @@ const Profile = () => {
       id: editId,
     };
 
-    console.log(photoData);
-    console.log(editId);
-
     dispatch(updatePhoto(photoData));
 
     resetComponentMessage();
@@ -154,7 +150,7 @@ const Profile = () => {
           <p>{user.bio}</p>
         </div>
       </div>
-      {id === user._id && (
+      {id === userAuth._id && (
         <>
           <div className="new-photo" ref={newPhotoForm}>
             <h3>Compartilhe algum momento seu:</h3>
@@ -211,7 +207,7 @@ const Profile = () => {
                     alt={photo.title}
                   />
                 )}
-                {id === user._id && (
+                {id === userAuth._id ? (
                   <div className="actions">
                     <Link to={`/photos/${photo._id}`}>
                       <BsFillEyeFill />
@@ -219,6 +215,10 @@ const Profile = () => {
                     <BsPencilFill onClick={() => handleEdit(photo)} />
                     <BsXLg onClick={() => handleDelete(photo._id)} />
                   </div>
+                ) : (
+                  <Link className="btn" to={`/photos/${photo._id}`}>
+                    Ver
+                  </Link>
                 )}
               </div>
             ))}

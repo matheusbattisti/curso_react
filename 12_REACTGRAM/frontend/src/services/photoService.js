@@ -39,8 +39,6 @@ const getPhoto = async (id) => {
       .then((res) => res.json())
       .catch((err) => err);
 
-    console.log(res);
-
     return res;
   } catch (error) {
     console.log(error);
@@ -55,8 +53,6 @@ const deletePhoto = async (id, token) => {
     const res = await fetch(api + "/photos/" + id, config)
       .then((res) => res.json())
       .catch((err) => err);
-
-    console.log(res);
 
     return res;
   } catch (error) {
@@ -73,8 +69,6 @@ const updatePhoto = async (data, id, token) => {
       .then((res) => res.json())
       .catch((err) => err);
 
-    console.log(res);
-
     return res;
   } catch (error) {
     console.log(error);
@@ -89,8 +83,6 @@ const like = async (id, token) => {
     const res = await fetch(api + "/photos/like/" + id, config)
       .then((res) => res.json())
       .catch((err) => err);
-
-    console.log(res);
 
     return res;
   } catch (error) {
@@ -107,8 +99,6 @@ const comment = async (data, id, token) => {
       .then((res) => res.json())
       .catch((err) => err);
 
-    console.log(res);
-
     return res;
   } catch (error) {
     console.log(error);
@@ -123,8 +113,6 @@ const getPhotos = async () => {
     const res = await fetch(api + "/photos", config)
       .then((res) => res.json())
       .catch((err) => err);
-
-    console.log(res);
 
     return res;
   } catch (error) {

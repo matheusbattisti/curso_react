@@ -10,3 +10,11 @@
   text-align: center;
   margin: 0.5em 0 2em 0;
 }
+
+.no-photos {
+  text-align: center;
+}
+
+.no-photos a {
+  color: #0094f6;
+}
