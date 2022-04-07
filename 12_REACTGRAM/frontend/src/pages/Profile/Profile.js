@@ -29,7 +29,6 @@ const Profile = () => {
 
   const { user, loading } = useSelector((state) => state.user);
   const {
-    photo,
     photos,
     loading: loadingPhoto,
     error: errorPhoto,

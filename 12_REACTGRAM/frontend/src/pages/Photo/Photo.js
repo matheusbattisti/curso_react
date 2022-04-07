@@ -11,14 +11,17 @@ import LikeContainer from "../../components/LikeContainer";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useResetComponentMessage } from "../../hooks/useResetComponentMessage";
 
 // Redux
-import { getPhoto, like, resetMessage, comment } from "../../slices/photoSlice";
+import { getPhoto, like, comment } from "../../slices/photoSlice";
 
 const Photo = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
+
+  const resetMessage = useResetComponentMessage(dispatch);
 
   const { user } = useSelector((state) => state.auth);
   const { photo, loading, error, message } = useSelector(
@@ -33,16 +36,10 @@ const Photo = () => {
   }, [dispatch, id]);
 
   // Like a photo
-  function resetComponentMessage() {
-    setTimeout(() => {
-      dispatch(resetMessage());
-    }, 2000);
-  }
-
   const handleLike = () => {
     dispatch(like(photo._id));
 
-    resetComponentMessage();
+    resetMessage();
   };
 
   // Insert a comment
@@ -58,7 +55,7 @@ const Photo = () => {
 
     setCommentText("");
 
-    resetComponentMessage();
+    resetMessage();
   };
 
   if (loading) {

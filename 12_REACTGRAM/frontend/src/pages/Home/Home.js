@@ -1,16 +1,14 @@
 import "./Home.css";
 
-import { uploads } from "../../utils/config";
-
 // components
-import Message from "../../components/Message";
 import LikeContainer from "../../components/LikeContainer";
 import PhotoItem from "../../components/PhotoItem";
+import { Link } from "react-router-dom";
 
 // hooks
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { useResetComponentMessage } from "../../hooks/useResetComponentMessage";
 
 // Redux
 import { getPhotos, like } from "../../slices/photoSlice";
@@ -18,10 +16,10 @@ import { getPhotos, like } from "../../slices/photoSlice";
 const Home = () => {
   const dispatch = useDispatch();
 
+  const resetMessage = useResetComponentMessage(dispatch);
+
   const { user } = useSelector((state) => state.auth);
-  const { photos, loading, resetComponentMessage } = useSelector(
-    (state) => state.photo
-  );
+  const { photos, loading } = useSelector((state) => state.photo);
 
   // Load all photos
   useEffect(() => {
@@ -31,7 +29,7 @@ const Home = () => {
   const handleLike = (photo = null) => {
     dispatch(like(photo._id));
 
-    resetComponentMessage();
+    resetMessage();
   };
 
   if (loading) {
