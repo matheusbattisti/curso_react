@@ -103,7 +103,7 @@ textarea::placeholder {
   background-color: #dc3545;
 }
 
-button[disabled] {
+button:disabled {
   background-color: #aaa;
 }
 
