@@ -1,15 +1,9 @@
-import MyComponent from "./MyComponent";
+const FirstComponent = () =>{
 
-const FirstComponent = () => {
-  // Um comentário
-  return (
-    <div>
-      {/* Um comentário no JSX */}
-      <h1>Título</h1>
-      <p className="text">Testando alguma classe</p>
-      <MyComponent />
-    </div>
-  );
-};
-
-export default FirstComponent;
+  return(
+  <div>
+    <h1>Meu FirstComponent</h1>
+    <p className="teste"> Meu texto no React!!</p>
+  </div>
+)}
+export default FirstComponent

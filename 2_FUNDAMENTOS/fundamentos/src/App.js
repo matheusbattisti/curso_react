@@ -1,20 +1,22 @@
-import logo from "./logo.svg";
-import "./App.css";
-
+// Components
 import FirstComponent from "./components/FirstComponent";
 import TemplateExpressions from "./components/TemplateExpressions";
-import MyComponent from "./components/MyComponent";
 import Events from "./components/Events";
 import Challenge from "./components/Challenge";
+// Style
+import "./App.css";
+
+
+
 
 function App() {
   return (
     <div className="App">
-      <FirstComponent />
-      <TemplateExpressions />
-      <MyComponent />
-      <Events />
-      <Challenge />
+      <h1>Fundamentos REACT</h1>
+      <FirstComponent/>
+      <TemplateExpressions/>
+      <Events/>
+      <Challenge/>
     </div>
   );
 }

@@ -1,17 +1,17 @@
-const TemplateExpressions = () => {
-  const name = "Matheus";
+const TemplateExpressions = () =>{
+
+  const name = "César"
   const data = {
-    age: 31,
-    job: "Programmer",
-  };
+    age: 32,
+    job: "developer",
+  }
 
-  return (
-    <div>
-      <h1>Olá {name}, tudo bem?</h1>
-      <p>Você atua como: {data.job}</p>
-      <p>{4 + 4}</p>
-    </div>
-  );
-};
+return(
+<div>
+  <h2>Olá {name}, tudo bem?</h2>
+  <p>Você tem: {data.age} anos, e trabalha como: {data.job}</p>
+</div>
+)
+}
 
-export default TemplateExpressions;
+export default TemplateExpressions
