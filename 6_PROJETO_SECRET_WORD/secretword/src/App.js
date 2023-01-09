@@ -125,18 +125,20 @@ function App() {
 
   // check win condition
   useEffect(() => {
-    const uniqueLetters = [...new Set(letters)];
+    if (letters.length > 0) {
+      const uniqueLetters = [...new Set(letters)];
 
-    console.log(uniqueLetters);
-    console.log(guessedLetters);
-
-    // win condition
-    if (guessedLetters.length === uniqueLetters.length) {
-      // add score
-      setScore((actualScore) => (actualScore += 100));
-
-      // restart game with new word
-      startGame();
+      console.log(uniqueLetters);
+      console.log(guessedLetters);
+  
+      // win condition
+      if (guessedLetters.length === uniqueLetters.length) {
+        // add score
+        setScore((actualScore) => (actualScore += 100));
+  
+        // restart game with new word
+        startGame();
+      }
     }
   }, [guessedLetters, letters, startGame]);
 
