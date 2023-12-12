@@ -66,6 +66,7 @@ function App() {
     setPickedCategory(category);
     setPickedWord(word);
     setLetters(wordLetters);
+    setGuesses(3); // sem esta instrução, o jogo estava reiniciando com as tentaivas "queimadas" anteriormente.
 
     setGameStage(stages[1].name);
   }, [pickWordAndCategory]);
